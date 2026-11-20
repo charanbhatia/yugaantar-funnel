@@ -1,9 +1,9 @@
-import { Pixelify_Sans, Inter, JetBrains_Mono } from 'next/font/google';
+import { Mona_Sans, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
-const display = Pixelify_Sans({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-display' });
-const body = Inter({ subsets: ['latin'], variable: '--font-body' });
-const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-mono' });
+// Same type as the Minarva staff console: Mona Sans for everything, Geist Mono for numbers.
+const mona = Mona_Sans({ subsets: ['latin'], variable: '--font-mona' });
+const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' });
 
 export const metadata = {
   title: 'Fest Pass Funnel · Yugaantar 2026',
@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${mona.variable} ${geistMono.variable}`}>
       <body>{children}</body>
     </html>
   );
