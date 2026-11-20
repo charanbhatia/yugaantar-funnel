@@ -4,7 +4,9 @@ import { REFRESH_SECONDS } from '../lib/queries.js';
 import { pct } from '../lib/shape.js';
 import { Shell, PageHeader, Card, Tile, Funnel, Bars, Columns, Area, HourStrip, fmt, fmtPct, tone, dayLabel } from './ui.jsx';
 
-export const revalidate = 600; // must match REFRESH_SECONDS (Next needs a literal here)
+// Always render from the newest cached PostHog result (refreshed every REFRESH_SECONDS in lib/data.js),
+// so the page never adds its own cache on top and the 'updated' time is the real fetch time.
+export const dynamic = 'force-dynamic';
 
 export default async function Dashboard() {
   let d;
@@ -63,7 +65,7 @@ export default async function Dashboard() {
         ))}
       </div>
 
-      <Card title="Same checkout, different product" action={<span className="badge neutral">All time · people with an order</span>}>
+      <Card title="Same checkout, different product" action={<span className="badge neutral">Since launch · people with an order</span>}>
         <Bars unit="%" max={100} items={d.products.map((p) => ({ name: `${p.name} (${fmt(p.people)})`, value: p.attemptRate, color: p.name === 'Fest Pass' ? 'bad' : '' }))} />
       </Card>
 

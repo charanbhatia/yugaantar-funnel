@@ -2,7 +2,7 @@ import { getDashboard } from '../../lib/data.js';
 import { RULE, TICKETS } from '../../lib/solutions.js';
 import { Shell, PageHeader, Card, Rich } from '../ui.jsx';
 
-export const revalidate = 600;
+export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Fixes for tech · Yugaantar Fest Pass' };
 
 const PRIO_TONE = { P0: 'bad', P1: 'warn', P2: 'neutral' };

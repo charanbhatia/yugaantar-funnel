@@ -20,7 +20,9 @@ Everything comes from PostHog project `602554`:
 
 Free SST and SSB students are excluded from the main funnel. On 21 Nov 2026 these numbers matched the staff payments list exactly (125 checkout openers, 4 payment attempts, 2 kept passes).
 
-**Refresh:** queries are cached for 10 minutes (`unstable_cache` plus ISR). There's no database and no cron: PostHog is the store, and the dashboard re-queries at most once per 10 minutes no matter how many people view it. That's about 66 queries an hour, which stays under PostHog's query rate limit.
+**Refresh:** `lib/data.js` caches one PostHog result for 10 minutes (`unstable_cache`, shared by every page and the API). Pages are rendered on each request from that cache, so the "updated" time in the header is the exact time the data was fetched. The first visit after the 10 minutes is up gets the previous result and starts a refresh in the background, so data is never more than about 10 minutes old while people are viewing it. Open tabs reload themselves every 10 minutes. There's no database or cron: about 66 PostHog queries an hour at most.
+
+**Segments** use the PostHog persons table (each person's current email), not the email snapshot stored on each event, so people who browsed before signing up are still counted correctly.
 
 **Privacy:** the site shows aggregate counts only. No emails or names are ever returned, and the API key stays on the server.
 
