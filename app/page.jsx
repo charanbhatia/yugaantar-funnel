@@ -49,12 +49,12 @@ export default async function Dashboard() {
         <Tile label="Passes sold" value={fmt(d.sold)} of={fmt(d.target)} progress={d.pace.progress} hint={`₹${fmt(d.funnel.revenue)} collected`} />
         <Tile label="Needed per day" value={fmt(d.pace.perDay)} hint={`${fmt(d.pace.remaining)} to go · ${d.pace.daysLeft} days left`} />
         <Tile label="Checkout → tried to pay" value={fmtPct(fp.attemptRate)} toneName={tone(fp.attemptRate)} hint={`Event entry: ${fmtPct(ev.attemptRate)}`} />
-        <Tile label="Pass page → checkout" value={fmtPct(s.checkout.step)} toneName={tone(s.checkout.step)} hint={`${fmt(s.passPage.value)} saw the pass page`} />
+        <Tile label="Pass page → checkout" value={fmtPct(s.checkout.step)} toneName={tone(s.checkout.step)} hint={`${fmt(s.passPage.value)} signed-in people saw it`} />
       </div>
 
       <Card title="Funnel" action={<span className="badge neutral">Unique people</span>}>
         <Funnel funnel={d.funnel} />
-        <p className="card-foot">Percent is conversion from the step above. Bars use a log scale so the small bottom steps stay visible. Free SST/SSB students are left out because they don&apos;t pay.</p>
+        <p className="card-foot">Each step only counts people who also did the step above it, and the percent is conversion from that step. Bars use a log scale so the small bottom steps stay visible. Free SST/SSB students are left out because they don&apos;t pay, and people who viewed /pass without signing in are in the segments table, not here, since buying needs an account.</p>
       </Card>
 
       <div className="grid two">
@@ -63,7 +63,7 @@ export default async function Dashboard() {
         ))}
       </div>
 
-      <Card title="Same checkout, different product" action={<span className="badge neutral">Tried to pay after opening</span>}>
+      <Card title="Same checkout, different product" action={<span className="badge neutral">All time · people with an order</span>}>
         <Bars unit="%" max={100} items={d.products.map((p) => ({ name: `${p.name} (${fmt(p.people)})`, value: p.attemptRate, color: p.name === 'Fest Pass' ? 'bad' : '' }))} />
       </Card>
 
@@ -111,11 +111,14 @@ export default async function Dashboard() {
       </Card>
 
       <div className="grid three">
-        <Card title="Device"><Bars items={d.devices} /></Card>
-        <Card title="Came from"><Bars items={d.referrers} /></Card>
-        <Card title="After closing checkout"><Bars items={d.after} color="accent" /></Card>
-        <Card title="Time of day"><HourStrip hours={d.hours} /></Card>
-        <Card title="Discount codes tried">
+        <Card title="Device" action={<span className="badge neutral">People</span>}>
+          <Bars items={d.devices} />
+          <p className="card-foot">A person who used a phone and a laptop counts in both.</p>
+        </Card>
+        <Card title="Came from" action={<span className="badge neutral">People</span>}><Bars items={d.referrers} /></Card>
+        <Card title="Next 30 min after opening checkout" action={<span className="badge neutral">People</span>}><Bars items={d.after} color="accent" /></Card>
+        <Card title="Time of day" action={<span className="badge neutral">Checkout opens · IST</span>}><HourStrip hours={d.hours} /></Card>
+        <Card title="Discount codes tried" action={<span className="badge neutral">Tries</span>}>
           <Bars items={d.codes.map((c) => ({ ...c, name: { unknown: 'Invalid code', applied: 'Worked', notForYou: 'Not eligible' }[c.name] || c.name }))} />
         </Card>
         <Card title="Intent">
