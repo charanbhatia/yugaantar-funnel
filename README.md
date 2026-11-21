@@ -26,6 +26,14 @@ Free SST and SSB students are excluded from the main funnel. On 21 Nov 2026 thes
 
 **Privacy:** the site shows aggregate counts only. No emails or names are ever returned, and the API key stays on the server.
 
+## Staff call list (`/calls`)
+
+Everyone who opened the Fest Pass checkout but has no paid pass (refunded passes included), with name, phone, email and college from their PostHog person record. It refreshes every 10 minutes along with the dashboard.
+
+- **Password-protected.** `middleware.js` asks for `STAFF_PASSWORD` (any username) on `/calls` and `/api/calls`. If the variable isn't set, the list stays locked. Personal data never appears on the public pages or `/api/funnel`.
+- **Check marks** ("called") are saved as a PostHog event, `funnel_dashboard_call_marked` (person id, called yes/no, who marked it). They show up for everyone as soon as PostHog has them, usually within a minute. Each click is kept, so you can see who called whom.
+- **Download sheet:** `/api/calls?format=csv` gives a CSV that opens in Excel or Google Sheets.
+
 ## Run locally
 
 ```bash

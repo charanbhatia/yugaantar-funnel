@@ -190,3 +190,28 @@ footer.inner { padding-bottom: 32px; font-size: .85rem; color: var(--muted); }
 @keyframes enter { from { opacity: 0; transform: translateY(12px); filter: blur(6px); } }
 .enter { animation: enter .9s var(--ease) both; animation-delay: var(--d, 0s); }
 @media (prefers-reduced-motion: reduce) { .enter, .ping::after { animation: none; } html { scroll-behavior: auto; } }
+
+/* Call list (staff only) */
+.calls-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 16px; }
+.seg { display: flex; gap: 4px; padding: 4px; border-radius: 99px; background: var(--mist); box-shadow: inset 0 0 0 1px var(--hairline); }
+.seg button { border: 0; background: transparent; border-radius: 99px; padding: 6px 14px; font: inherit; font-size: .85rem; font-weight: 600; color: var(--muted); cursor: pointer; }
+.seg button span { margin-left: 4px; color: var(--muted); font-weight: 500; }
+.seg button.on { background: #fff; color: var(--ink); box-shadow: var(--shadow-card); }
+.field { height: 40px; border-radius: 99px; border: 0; box-shadow: inset 0 0 0 1px var(--hairline); padding: 0 16px; font: inherit; font-size: .9rem; color: var(--ink); background: #fff; flex: 1 1 220px; min-width: 0; }
+.field.narrow { flex: 0 1 220px; }
+.field:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+.btn.ghost { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px var(--hairline); padding: 0 18px; height: 40px; }
+table.calls { min-width: 980px; }
+table.calls td { vertical-align: top; }
+table.calls td.strong { color: var(--ink); font-weight: 600; }
+table.calls td.strong .badge { margin-left: 8px; height: 20px; font-size: .7rem; }
+table.calls a { color: var(--ink); text-decoration: none; }
+table.calls a:hover { text-decoration: underline; }
+table.calls tr.done td { background: #f6fbf8; }
+.by { display: block; font-size: .75rem; color: var(--muted); font-weight: 400; margin-top: 2px; }
+.check { position: relative; display: inline-grid; place-items: center; width: 26px; height: 26px; cursor: pointer; }
+.check input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.check span { width: 22px; height: 22px; border-radius: 7px; box-shadow: inset 0 0 0 1.5px var(--hairline); background: #fff; transition: background .15s, box-shadow .15s; }
+.check input:checked + span { background: var(--ok); box-shadow: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-size: 18px; background-position: center; background-repeat: no-repeat; }
+.check input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+.check input:disabled + span { opacity: .5; }

@@ -15,6 +15,7 @@ export const istTime = (iso) =>
 const NAV = [
   { href: '/', key: 'funnel', label: 'Funnel' },
   { href: '/solutions', key: 'solutions', label: 'Fixes for tech' },
+  { href: '/calls', key: 'calls', label: 'Call list · staff' },
 ];
 
 export function Shell({ active, data, children }) {
